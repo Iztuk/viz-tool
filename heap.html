@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Visualizations - Binary Heap</title>
+
+<!--css-->
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/viz.css">
+
+<link rel="stylesheet" href="css/heap.css">
+
+<!--js-->
+<script src="js/external/jquery-1.10.2.js"></script>
+<script src="js/external/jquery-ui.js"></script>
+<script src="js/external/d3.v3.js"></script>
+<script src="js/viz.js"></script>
+<script src="js/common.js"></script>
+<script src="js/actions/heap_actions.js"></script>
+<script src="//connect.facebook.net/en_US/all.js"></script>
+<!-- more scripts are below-->
+
+<!--fonts-->
+<link href="fonts/silkscreen/stylesheet.css" rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+
+<body>
+
+	<div id="top-bar" style="text-align: center;">
+		<span id="title">
+			<a class="selected-viz">Heap</a>
+		</span>
+		<span id="title">
+			<a href="index.html" id="avl-tree-link">AVL Tree</a>
+		</span>
+	</div>
+    
+    <div id="viz"></div>
+    
+    <div id="current-action" class="panel"><p></p></div>
+    
+    <div id="actions" class="panel">
+		<p id="buildv1">Build Heap</p>
+		<p id="insert">Insert</p>
+		<p id="extractmax" class="execAction" onclick=extractmax()>Extract Max</p>
+    </div>
+    <div id="actions-extras">
+    <!--put all the extra action pullouts (input) and error messages here-->
+    	<div id="buildv1-input"><input type="text" id="arrv1" autocomplete="off" value="2,7,26,25,19,17,1,90,3,36" /></div>
+        <div id="buildv1-go" class="execAction" onclick=buildv1()><p>GO</p></div>
+        <div id="buildv1-err" class="err"></div>
+        <div id="buildv2-err" class="err"></div>
+        <div id="insert-input"><input type="text" id="v" autocomplete="off" value=26 /></div>
+        <div id="insert-go" class="execAction" onclick=insert()><p>GO</p></div>
+        <div id="insert-err" class="err"></div>
+        <div id="extractmax-err" class="err"></div>
+        <div id="heapsort-err" class="err"></div>
+    </div>
+    
+<div id="left-bar"></div>
+<div id="right-bar"></div>
+
+<div id="dark-overlay"></div>
+<div id="about" class="overlays"></div>
+<div id="team" class="overlays"></div>
+<div id="termsofuse" class="overlays"></div>
+
+<script src="js/graph_library/constant.js"></script>
+<script src="js/graph_library/properties.js"></script>
+<script src="js/graph_library/helperObjects.js"></script>
+<script src="js/graph_library/misc.js"></script>
+<script src="js/graph_library/Widget.js"></script>
+<script src="js/graph_library/GraphWidget.js"></script>
+<script src="js/graph_library/GraphVertexWidget.js"></script>
+<script src="js/graph_library/GraphEdgeWidget.js"></script>
+<script src="js/widgets/HeapWidget.js"></script>
+
+<script type="text/javascript">
+	//start by showing actions panel
+	$('#play').hide();
+
+	var heapWidget = new Heap();
+	var gw = heapWidget.getGraphWidget();
+		
+	function buildv1() {
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			if ((mode=="exploration")&&heapWidget.buildV1(document.getElementById("arrv1").value.split(","))) {
+				closeBuildv1(); //in heap_actions.js
+				triggerRightPanels();
+				isPlaying = true; //in viz.js
+			}
+		}, 500);
+	}
+	
+	// function buildv1Sample() {
+	// 	if(isPlaying) {	stop(); }
+	// 	setTimeout( function() {
+	// 		var stringArr = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31";
+	// 		if ((mode=="exploration")&&heapWidget.buildV1(stringArr.split(","))) {
+	// 			$('#current-action').show();
+	// 			$('#current-action p').html("Build heap - O(n log n): sorted sample 1 - 31");
+	// 			$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+	// 			closeBuildv1(); //in heap_actions.js
+	// 			triggerRightPanels();
+	// 			isPlaying = true; //in viz.js
+	// 		}
+	// 	}, 500);
+	// }
+		
+	function insert() {
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			if ((mode=="exploration")&&heapWidget.insert(parseInt(document.getElementById("v").value), true)) {
+				$('#current-action').show();
+				$('#current-action p').html("Insert "+ $('#v').val());
+				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+				closeInsert();
+				triggerRightPanels();
+				isPlaying = true;
+				document.getElementById("v").value=1+Math.floor(Math.random()*98); // 1..99
+			}
+		}, 500);
+	}
+	
+	function extractmax() {
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			if ((mode=="exploration")&&heapWidget.extractMax(true)) {
+				$('#current-action').show();
+				$('#current-action p').html("Extract max");
+				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+				$('#extractmax-err').html("");
+				closeBuildv1();
+				closeBuildv2();
+				closeInsert();
+				triggerRightPanels();
+				isPlaying = true;
+			}
+		}, 500);
+	}
+	
+	function heapsort() {
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			if ((mode=="exploration")&&heapWidget.heapSort()) {
+				$('#current-action').show();
+				$('#current-action p').html("Heapsort");
+				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+				$('#heapsort-err').html("");
+				closeBuildv1();
+				closeBuildv2();
+				closeInsert();
+				triggerRightPanels();
+				isPlaying = true;
+			}
+		}, 500);
+	}
+	
+	//playback controls might fit better in viz.js, but put here in case some viz does not use GraphWidgetNew.js
+	var isPaused = false;
+	function isAtEnd() {
+		return (gw.getCurrentIteration()==(gw.getTotalIteration()-1));
+	}
+	
+	function pause() {
+		if(isPlaying) {
+			isPaused = true;
+			gw.pause();
+			$('#play').show();
+			$('#pause').hide();
+		}
+	}
+	function play() {
+		if(isPlaying) {
+			isPaused = false;
+			$('#pause').show();
+			$('#play').hide();
+			if(isAtEnd()) {
+				gw.replay();
+			} else {
+				gw.play();
+			}
+		}
+	}
+	function stepForward() {
+		if(isPlaying) {
+			pause();
+			gw.forceNext(250);
+		}
+	}
+	function stepBackward() {
+		if(isPlaying) {
+			pause();
+			gw.forcePrevious(250);	
+		}
+	}
+	function goToBeginning() {
+		if(isPlaying) {
+			gw.jumpToIteration(0,0);
+			pause();
+		}
+	}
+	function goToEnd() {
+		if(isPlaying) {
+			gw.jumpToIteration(gw.getTotalIteration()-1,0);
+			pause();
+		}
+	}
+	function stop() {
+		gw.stop();
+		isPaused = false;
+		isPlaying = false;
+		$('#pause').show();
+		$('#play').hide();
+	}
+	
+	//shortcut keys for playback controls
+	$(document).keydown( function(event) {
+		if(event.which == 32) { //spacebar
+			if(isPaused) { play(); } else { pause(); }
+		} else if(event.which == 37) { //left arrow
+			stepBackward();
+		} else if(event.which == 39) { //right arrow
+			stepForward();
+		} else if(event.which == 35) { //end
+			stop();
+		} else if (event.which == 189) { //minus
+			var d = (2200-gw.getAnimationDuration())-100;
+			if(d > 0) {
+				$("#speed-input").slider("value", d);
+			} else {
+				$("#speed-input").slider("value", 0);
+			}
+		} else if (event.which == 187) { //plus
+			var d = (2200-gw.getAnimationDuration())+100;
+			if(d <= 2000) {
+				$("#speed-input").slider("value", d);
+			} else {
+				$("#speed-input").slider("value", 2000);
+			}
+		}
+	});
+	
+	//sliders
+	$("#speed-input").slider({
+		min: 200,
+		max: 2000,
+		value: 1700,
+		change: function(event, ui) {
+			gw.setAnimationDuration(2200-ui.value);
+		}
+	});
+	$("#progress-bar").slider({
+		range: "min",
+		min: 0,
+		value: 0,
+		slide: function(event, ui) {
+			gw.pause();
+			gw.jumpToIteration(ui.value,0);
+		},
+		stop: function(event, ui) {
+			if(!isPaused) { setTimeout( function(){gw.play();}, 500) }
+		}
+	});
+	
+</script>
+
+</body>
+</html>
