@@ -1,117 +1,326 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visualizations - AVL Tree</title>
 
-    <!--css-->
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/viz.css">
-    <link rel="stylesheet" href="css/bst.css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Visualizations - Binary Search Tree</title>
 
-    <!--js-->
-    <script src="js/external/jquery-1.10.2.js"></script>
-    <script src="js/external/jquery-ui.js"></script>
-    <script src="js/viz.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/actions/bst_actions.js"></script>
-    <script src="js/external/d3.v3.js"></script>
+<!--css-->
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/common.css">
+<link rel="stylesheet" href="css/viz.css">
 
-    <!--fonts-->
-    <link href="fonts/silkscreen/stylesheet.css" rel="stylesheet" type="text/css">
-    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="css/bst.css">
+
+<!--js-->
+<script src="js/external/jquery-1.10.2.js"></script>
+<script src="js/external/jquery-ui.js"></script>
+<script src="js/viz.js"></script>
+<script src="js/common.js"></script>
+<script src="js/actions/bst_actions.js"></script>
+<script src="js/external/d3.v3.js"></script>
+<!-- more scripts are below-->
+
+<!--fonts-->
+<link href="fonts/silkscreen/stylesheet.css" rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
 </head>
 
 <body>
+
     <div id="top-bar" style="text-align: center;">
-        <span id="title">
-            <a id="title-AVL" class="selected-viz" href="#">AVL Tree</a>
-        </span>
-        <span id="title">
-            <a id="title-Heap" href="heap.html">Heap</a>
-        </span>
-    </div>
+		<span id="title">
+			<a href="heap.html" class="selected-viz">Heap</a>
+		</span>
+		<span id="title">
+			<a href="index.html" id="avl-tree-link">AVL Tree</a>
+		</span>
+	</div>
 
-    <!-- Action buttons at the top -->
-    <div id="action-buttons" style="text-align: center; margin: 20px 0;">
-        <label>Search: </label>
-        <input type="text" id="v-search" placeholder="Enter value">
-        <button onclick="searchVertex()">Go</button>
-
-        <label>Insert: </label>
-        <input type="text" id="v-insert" placeholder="Enter value(s)">
-        <button onclick="insertVertex()">Go</button>
-
-        <label>Remove: </label>
-        <input type="text" id="v-remove" placeholder="Enter value(s)">
-        <button onclick="removeVertex()">Go</button>
-    </div>
-
+    
     <div id="viz"></div>
+        
+    <div id="actions" class="panel">
+        <p id="search">Search</p>
+		<p id="insert">Insert</p>
+		<p id="remove">Remove</p>
+    </div>
+    <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
+    <div id="actions-extras">
+    <!--put all the extra action pullouts (input) and error messages here-->
+    	<div id="find-min" class="execAction" style="white-space: nowrap;" onClick=findMin()><p>Find Min</p></div>
+        <div id="find-max" class="execAction" style="white-space: nowrap;" onClick=findMax()><p>Find Max</p></div>
+    	<div id="search-input"><input type="text" id="v-search" title="Enter an integer" autocomplete="off" value=5 /></div>
+        <div id="search-go" class="execAction" onclick=searchVertex()><p>GO</p></div>
+        <div id="search-err" class="err"></div>
+        <div id="insert-input"><input type="text" id="v-insert" title="Enter an integer or comma-separated array of integers" autocomplete="off" value=20 /></div>
+        <div id="insert-go" class="execAction" onclick=insertVertex()><p>GO</p></div>
+        <div id="insert-err" class="err"></div>
+        <div id="remove-input"><input type="text" id="v-remove" title="Enter an integer or comma-separated array of integers" autocomplete="off" value=23 /></div>
+        <div id="remove-go" class="execAction" onclick=removeVertex()><p>GO</p></div>
+        <div id="remove-err" class="err"></div>
+        <div id="inorder-err" class="err"></div>
+    </div>
+    
+<div id="left-bar"></div>
+<div id="right-bar"></div>
 
-    <script src="js/graph_library/constant.js"></script>
-    <script src="js/graph_library/properties.js"></script>
-    <script src="js/graph_library/helperObjects.js"></script>
-    <script src="js/graph_library/misc.js"></script>
-    <script src="js/graph_library/Widget.js"></script>
-    <script src="js/graph_library/GraphWidget.js"></script>
-    <script src="js/graph_library/GraphVertexWidget.js"></script>
-    <script src="js/graph_library/GraphEdgeWidget.js"></script>
-    <script src="js/widgets/BstWidget.js"></script>
+<!-- <div id="media-controls">
+	<div id="speed-control">slow<div id="speed-input"></div>fast</div>
+	<span id="go-to-beginning" class="media-control-button" title="go to beginning" onclick=goToBeginning()><img src="img/goToBeginning.png" alt="go to beginning" /></span>
+	<span id="previous" class="media-control-button" title="step backward" onclick=stepBackward()><img src="img/prevFrame.png" alt="previous frame" /></span>
+    <span id="pause" class="media-control-button" title="pause" onclick=pause()><img src="img/pause.png" alt="pause" /></span>
+    <span id="play" class="media-control-button" title="play" onclick=play()><img src="img/play.png" alt="play" /></span>
+    <span id="next" class="media-control-button" title="step forward" onclick=stepForward()><img src="img/nextFrame.png" alt="next frame" /></span>
+    <span id="go-to-end" class="media-control-button" title="go to end" onclick=goToEnd()><img src="img/goToEnd.png" alt="go to end"/></span>
+    <div id="progress-bar" class="media-control-button"></div>
+</div> -->
 
-    <script type="text/javascript">
-        $('#play').hide();
+<div id="dark-overlay"></div>
+<div id="about" class="overlays"></div>
+<div id="team" class="overlays"></div>
+<div id="termsofuse" class="overlays"></div>
 
-        //this viz-specific code
-        var bstWidget = new BST();
-        var gw = bstWidget.getGraphWidget();
+<script src="js/graph_library/constant.js"></script>
+<script src="js/graph_library/properties.js"></script>
+<script src="js/graph_library/helperObjects.js"></script>
+<script src="js/graph_library/misc.js"></script>
+<script src="js/graph_library/Widget.js"></script>
+<script src="js/graph_library/GraphWidget.js"></script>
+<script src="js/graph_library/GraphVertexWidget.js"></script>
+<script src="js/graph_library/GraphEdgeWidget.js"></script>
+<script src="js/widgets/BstWidget.js"></script>
 
-        //title changing
-        $('#title-BST').click(function () {
-            if (isPlaying) { stop(); }
-            closeSearch();
-            closeInsert();
-            closeRemove();
-            showActionsPanel();
-            hideStatusPanel();
-            hideCodetracePanel();
-            bstWidget.isAVL(false);
-        });
-        $('#title-AVL').click(function () {
-            if (isPlaying) { stop(); }
-            closeSearch();
-            closeInsert();
-            closeRemove();
-            showActionsPanel();
-            hideStatusPanel();
-            hideCodetracePanel();
-            bstWidget.isAVL(true);
-        });
+<script type="text/javascript">
+	$('#play').hide();
 
-        function searchVertex() {
-            const value = $('#v-search').val();
-            if (value) {
-                bstWidget.search(parseInt(value));
-            }
-        }
+	//this viz-specific code
+	var bstWidget = new BST();
+    var gw = bstWidget.getGraphWidget();
+	
+	//title changing
+	$('#title-BST').click(function() {
+		if(isPlaying) {	stop(); }
+		closeSearch();
+		closeInsert();
+		closeRemove();
+		showActionsPanel();
+		hideStatusPanel();
+		hideCodetracePanel();
+		bstWidget.isAVL(false);
+	});
+	$('#title-AVL').click(function() {
+		if(isPlaying) {	stop(); }
+		closeSearch();
+		closeInsert();
+		closeRemove();
+		showActionsPanel();
+		hideStatusPanel();
+		hideCodetracePanel();
+		bstWidget.isAVL(true);
+	});
 
-        function insertVertex() {
-            const value = $('#v-insert').val();
-            if (value) {
-                bstWidget.insertArr(value.split(',').map(Number));
-            }
-        }
+	function findMin() {
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			if((mode=="exploration")&&bstWidget.findMin()) {
+				$('#current-action').show();
+				$('#current-action p').html("Find minimum");
+				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+				closeSearch();
+				triggerRightPanels();
+				isPlaying = true;
+			}
+		}, 500)
+	}
+	
+	function findMax() {
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			if((mode=="exploration")&&bstWidget.findMax()) {
+				$('#current-action').show();
+				$('#current-action p').html("Find maximum");
+				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+				closeSearch();
+				triggerRightPanels();
+				isPlaying = true;
+			}
+		}, 500)
+	}
 
-        function removeVertex() {
-            const value = $('#v-remove').val();
-            if (value) {
-                bstWidget.removeArr(value.split(',').map(Number));
-            }
-        }
-    </script>
+    function searchVertex(){
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			var input = $('#v-search').val();
+			input = parseInt(input);
+			if((mode=="exploration")&&bstWidget.search(input)) {
+				$('#current-action').show();
+				$('#current-action p').html("Search for "+ input);
+				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+				closeSearch();
+				triggerRightPanels();
+				isPlaying = true;
+			}
+		}, 500)
+    }
+
+    function insertVertex(){
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			var input = $('#v-insert').val();
+			input = input.split(",");
+			if((mode=="exploration")&&bstWidget.insertArr(input)) {
+				$('#current-action').show();
+				$('#current-action p').html("Insert "+ input);
+				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+				closeInsert();
+				triggerRightPanels();
+				isPlaying = true;
+			}
+		}, 500)
+    }
+
+   function removeVertex(){
+		if(isPlaying) {	stop(); }
+		setTimeout( function() {
+			var input = $('#v-remove').val();
+			input = input.split(",");
+			if((mode=="exploration")&&bstWidget.removeArr(input)) {
+				$('#current-action').show();
+				$('#current-action p').html("Remove "+ input);
+				$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+				closeRemove();
+				triggerRightPanels();
+				isPlaying = true;
+			}
+		}, 500);
+    }
+	
+	// function inorderTraversal(){
+	// 	if(isPlaying) {	stop(); }
+	// 	setTimeout( function() {
+	// 		if((mode=="exploration")&&bstWidget.inorderTraversal()) {
+	// 			$('#current-action').show();
+	// 			$('#current-action p').html("In-order Traversal");
+	// 			$('#progress-bar').slider( "option", "max", gw.getTotalIteration()-1);
+	// 			$('#inorder-err').html("");
+	// 			closeSearch();
+	// 			closeInsert();
+	// 			triggerRightPanels();
+	// 			isPlaying = true;
+	// 		}
+	// 	}, 500);
+    // }
+	
+	//playback controls might fit better in viz.js, but put here in case some viz does not use GraphWidgetNew.js
+	var isPaused = false;
+	function isAtEnd() {
+		return (gw.getCurrentIteration()==(gw.getTotalIteration()-1));
+	}
+	
+	function pause() {
+		if(isPlaying) {
+			isPaused = true;
+			gw.pause();
+			$('#play').show();
+			$('#pause').hide();
+		}
+	}
+	function play() {
+		if(isPlaying) {
+			isPaused = false;
+			$('#pause').show();
+			$('#play').hide();
+			if(isAtEnd()) {
+				gw.replay();
+			} else {
+				gw.play();
+			}
+		}
+	}
+	function stepForward() {
+		if(isPlaying) {
+			pause();
+			gw.forceNext(250);
+		}
+	}
+	function stepBackward() {
+		if(isPlaying) {
+			pause();
+			gw.forcePrevious(250);	
+		}
+	}
+	function goToBeginning() {
+		if(isPlaying) {
+			gw.jumpToIteration(0,0);
+			pause();
+		}
+	}
+	function goToEnd() {
+		if(isPlaying) {
+			gw.jumpToIteration(gw.getTotalIteration()-1,0);
+			pause();
+		}
+	}
+	function stop() {
+		gw.stop();
+		isPaused = false;
+		isPlaying = false;
+		$('#pause').show();
+		$('#play').hide();
+		$('#current-action').hide();
+	}
+	
+	//shortcut keys for playback controls
+	$(document).keydown( function(event) {
+		if(event.which == 32) { //spacebar
+			if(isPaused) { play(); } else { pause(); }
+		} else if(event.which == 37) { //left arrow
+			stepBackward();
+		} else if(event.which == 39) { //right arrow
+			stepForward();
+		} else if(event.which == 35) { //end
+			stop();
+		} else if (event.which == 189) { //minus
+			var d = (2200-gw.getAnimationDuration())-100;
+			if(d > 0) {
+				$("#speed-input").slider("value", d);
+			} else {
+				$("#speed-input").slider("value", 0);
+			}
+		} else if (event.which == 187) { //plus
+			var d = (2200-gw.getAnimationDuration())+100;
+			if(d <= 2000) {
+				$("#speed-input").slider("value", d);
+			} else {
+				$("#speed-input").slider("value", 2000);
+			}
+		}
+	});
+	
+	//sliders
+	$("#speed-input").slider({
+		min: 200,
+		max: 2000,
+		value: 1700,
+		change: function(event, ui) {
+			gw.setAnimationDuration(2200-ui.value);
+		}
+	});
+	$("#progress-bar").slider({
+		range: "min",
+		min: 0,
+		value: 0,
+		slide: function(event, ui) {
+			gw.pause();
+			gw.jumpToIteration(ui.value,0);
+		},
+		stop: function(event, ui) {
+			if(!isPaused) { setTimeout( function(){gw.play();}, 500) }
+		}
+	});
+	
+</script>
+
 </body>
-
 </html>
