@@ -7,11 +7,11 @@ var BST = function(){
   var graphWidget = new GraphWidget();
   var isAVL = true;
 
-  var valueRange = [1, 100]; // Range of valid values of BST vertexes allowed
-  var maxHeightAllowed = 10;
+  var valueRange = [1, 1000000]; // Range of valid values of BST vertexes allowed
+  var maxHeightAllowed = 100;
 
-  var initialArray = [15, 6, 23, 4, 7, 71, 5, 50];
-  var initialAvlArray = [15, 6, 50, 4, 7, 23, 71, 5];
+  var initialArray = [];
+  var initialAvlArray = [];
 
   /*
    * internalBst: Internal representation of BST in this object

@@ -42,8 +42,12 @@
         
     <div id="actions" class="panel">
         <p id="search">Search</p>
-		<p id="insert">Insert</p>
-		<p id="remove">Remove</p>
+        <p id="insert">Insert</p>
+        <p id="remove">Remove</p>
+        <p>
+            <p id="generate-random" onclick="generateRandomTree()">Generate Random Tree</p>
+            <input type="number" id="num-nodes" placeholder="Enter number of nodes" min="1" />
+        </p>
     </div>
     <div id="actions-hide" class="panel-hide"><img src="img/arrow_white_right.png" title="show/hide actions panel"/></div>
     <div id="actions-extras">
@@ -319,6 +323,35 @@
 			if(!isPaused) { setTimeout( function(){gw.play();}, 500) }
 		}
 	});
+
+    function generateRandomTree() {
+            const numNodesInput = $('#num-nodes').val();
+            const numNodes = parseInt(numNodesInput);
+
+            if (isNaN(numNodes) || numNodes <= 0) {
+                $('#generate-random-err').text("Please enter a valid number of nodes.");
+                return;
+            }
+
+            $('#generate-random-err').text(""); // Clear Errors
+            const randomValues = new Set();
+            const minValue = 1;
+            const maxValue = 100;
+
+            while (randomValues.size < numNodes) {
+                const randomNum = Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+                randomValues.add(randomNum);
+            }
+
+            const valuesArray = Array.from(randomValues);
+            if ((mode === "exploration") && bstWidget.insertArr(valuesArray)) {
+                $('#current-action').show();
+                $('#current-action p').html(`Generated Tree with ${valuesArray.length} Nodes`);
+                $('#progress-bar').slider("option", "max", gw.getTotalIteration() - 1);
+                triggerRightPanels();
+                isPlaying = true;
+            }
+        }
 	
 </script>
 

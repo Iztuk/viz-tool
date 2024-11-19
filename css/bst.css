@@ -216,3 +216,42 @@
 		border-bottom-color: black;
 		margin-left: -10px;
 	}
+
+	#generate-random-input {
+		position: fixed;
+		bottom: 65px;
+		left: 196px;
+		background: #777;
+		width: 0px;
+		overflow: hidden;
+	}
+	
+	#generate-random-input input {
+		background: black;
+		color: white;
+		padding: 6px 8px 5px;
+		width: 140px;
+	}
+	
+	#generate-random-tree {
+		position: fixed;
+		bottom: 65px;
+		left: 328px;
+		width: 0px;
+		background: #777;
+		color: white;
+		overflow: hidden;
+	}
+	
+	#generate-random-tree p {
+		padding: 5px 8px;
+	}
+	
+	#generate-random-err {
+		position: fixed;
+		bottom: 65px;
+		left: 372px;
+		color: red;
+		font-size: 0.9em;
+		padding: 5px 0px;
+	}
