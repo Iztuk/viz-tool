@@ -53,7 +53,7 @@ var Heap = function() {
   function dummyInitArrayTwo(){
     var i;
 
-    var initValue = [999999, 90, 19, 36, 17, 3, 25, 1, 2, 7] // set a huge number A[0] to prevent minor bug
+    var initValue = [] // set a huge number A[0] to prevent minor bug
 
     A = [];
 
