@@ -1,6 +1,3 @@
-// @author  Ivan Reinaldo
-// Defines a BST object; keeps implementation of BST internally and interact with GraphWidget to display BST visualizations
-// Also includes AVL tree
 
 var BST = function(){
   var self = this;
@@ -13,20 +10,6 @@ var BST = function(){
   var initialArray = [];
   var initialAvlArray = [];
 
-  /*
-   * internalBst: Internal representation of BST in this object
-   * The keys are the text of the nodes, and the value is the attributes of the corresponding node encapsulated in a JS object, which are:
-   * - "parent": text of the parent node. If the node is root node, the value is null.
-   * - "leftChild": text of the left child. No child -> null
-   * - "rightChild": text of the right child. No child -> null
-   * - "cx": X-coordinate of center of the node
-   * - "cy": Y-coordinate of center of the node
-   * - "height": height of the node. Height of root is 0
-   * - "vertexClassNumber": Vertex class number of the corresponding node
-   *
-   * In addition, there is a key called "root" in internalBst, containing the text of the root node.
-   * If BST is empty, root is null.
-   */
 
   var internalBst = {};
   var amountVertex = 0;
@@ -38,6 +21,7 @@ var BST = function(){
   this.getGraphWidget = function(){
     return graphWidget;
   }
+
 
   /*
    * @deprecated Use init(initArr)
@@ -235,7 +219,7 @@ var BST = function(){
     stateList.push(currentState);
 
     graphWidget.startAnimation(stateList);
-    populatePseudocode(4);
+    //populatePseudocode(4);
     return true;
   }
 
@@ -309,7 +293,7 @@ var BST = function(){
     stateList.push(currentState);
 
     graphWidget.startAnimation(stateList);
-    populatePseudocode(2);
+    //populatePseudocode(2);
     return true;
   }
 
@@ -383,7 +367,7 @@ var BST = function(){
     stateList.push(currentState);
 
     graphWidget.startAnimation(stateList);
-    populatePseudocode(1);
+    //populatePseudocode(1);
     return true;
   }
 
@@ -579,7 +563,7 @@ var BST = function(){
     stateList.push(currentState);
 
     graphWidget.startAnimation(stateList);
-    populatePseudocode(1);
+    //populatePseudocode(1);
     return true;
   }
 
@@ -727,7 +711,7 @@ var BST = function(){
         currentState["vl"][key]["state"] = VERTEX_HIGHLIGHTED; 
       }
     }
-    populatePseudocode(3);
+    //populatePseudocode(3);
     return true;
   }
 
@@ -1173,9 +1157,9 @@ var BST = function(){
 
     graphWidget.startAnimation(stateList);
 	if(isAVL) {
-    	populatePseudocode(6);
+    	//populatePseudocode(6);
 	} else {
-		populatePseudocode(0);
+		//populatePseudocode(0);
 	}
     return true;
   }
@@ -1853,9 +1837,9 @@ var BST = function(){
 
     graphWidget.startAnimation(stateList);
 	if(isAVL) {
-    	populatePseudocode(7);
+    	//populatePseudocode(7);
 	} else {
-		populatePseudocode(5);
+		//populatePseudocode(5);
 	}
     return true;
   }
@@ -2116,80 +2100,4 @@ var BST = function(){
     }
   }
   
-  function populatePseudocode(act) {
-    switch (act) {
-      case 0: // Insert
-        document.getElementById('code1').innerHTML = 'if found insertion point';
-        document.getElementById('code2').innerHTML = '&nbsp&nbspcreate new node';
-        document.getElementById('code3').innerHTML = 'if value to be inserted < this key';
-        document.getElementById('code4').innerHTML = '&nbsp&nbspgo left';
-        document.getElementById('code5').innerHTML = 'else go right';
-        document.getElementById('code6').innerHTML = '';
-        document.getElementById('code7').innerHTML = '';
-        break;
-    case 1: // findMax
-        document.getElementById('code1').innerHTML = 'if this is null return empty';
-        document.getElementById('code2').innerHTML = 'if right != null';
-        document.getElementById('code3').innerHTML = '&nbsp&nbspgo right';
-        document.getElementById('code4').innerHTML = 'else return this key';
-        document.getElementById('code5').innerHTML = '';
-        document.getElementById('code6').innerHTML = '';
-        document.getElementById('code7').innerHTML = '';
-        break;
-    case 2: // findMin
-        document.getElementById('code1').innerHTML = 'if this is null return empty';
-        document.getElementById('code2').innerHTML = 'else if left != null';
-        document.getElementById('code3').innerHTML = '&nbsp&nbspgo left';
-        document.getElementById('code4').innerHTML = 'else return this key';
-        document.getElementById('code5').innerHTML = '';
-        document.getElementById('code6').innerHTML = '';
-        document.getElementById('code7').innerHTML = '';
-        break;
-    case 3: // in-order traversal
-        document.getElementById('code1').innerHTML = 'if this is null';
-        document.getElementById('code2').innerHTML = '&nbsp;&nbsp;return';
-        document.getElementById('code3').innerHTML = 'inOrder(left)';
-        document.getElementById('code4').innerHTML = 'visit this, then inOrder(right)';
-        document.getElementById('code5').innerHTML = '';
-        document.getElementById('code6').innerHTML = '';
-        document.getElementById('code7').innerHTML = '';
-        break;
-    case 4: // search
-        document.getElementById('code1').innerHTML = 'if this == null';
-        document.getElementById('code2').innerHTML = '&nbsp;&nbsp;return null';
-        document.getElementById('code3').innerHTML = 'else if this key == search value';
-        document.getElementById('code4').innerHTML = '&nbsp;&nbsp;return this';
-        document.getElementById('code5').innerHTML = 'else if this key < search value';
-        document.getElementById('code6').innerHTML = '&nbsp;&nbsp;search right';
-        document.getElementById('code7').innerHTML = 'else search left';
-        break;
-    case 5: // remove
-        document.getElementById('code1').innerHTML = 'search for v';
-        document.getElementById('code2').innerHTML = 'if v is a leaf';
-        document.getElementById('code3').innerHTML = '&nbsp;&nbsp;delete leaf v';
-        document.getElementById('code4').innerHTML = 'else if v has 1 child';
-        document.getElementById('code5').innerHTML = '&nbsp;&nbsp;bypass v';
-        document.getElementById('code6').innerHTML = 'else replace v with successor';
-        document.getElementById('code7').innerHTML = '';
-        break;
-	case 6: // insert with rotations
-        document.getElementById('code1').innerHTML = 'insert v';
-        document.getElementById('code2').innerHTML = 'check balance factor of this and its children';
-        document.getElementById('code3').innerHTML = '&nbsp;&nbsp;case1: this.rotateRight';
-        document.getElementById('code4').innerHTML = '&nbsp;&nbsp;case2: this.left.rotateLeft, this.rotateRight';
-        document.getElementById('code5').innerHTML = '&nbsp;&nbsp;case3: this.rotateLeft';
-        document.getElementById('code6').innerHTML = '&nbsp;&nbsp;case4: this.right.rotateRight, this.rotateLeft';
-        document.getElementById('code7').innerHTML = '&nbsp;&nbsp;this is balanced';
-        break;
-	case 7: // remove with rotations
-        document.getElementById('code1').innerHTML = 'remove v';
-        document.getElementById('code2').innerHTML = 'check balance factor of this and its children';
-        document.getElementById('code3').innerHTML = '&nbsp;&nbsp;case1: this.rotateRight';
-        document.getElementById('code4').innerHTML = '&nbsp;&nbsp;case2: this.left.rotateLeft, this.rotateRight';
-        document.getElementById('code5').innerHTML = '&nbsp;&nbsp;case3: this.rotateLeft';
-        document.getElementById('code6').innerHTML = '&nbsp;&nbsp;case4: this.right.rotateRight, this.rotateLeft';
-        document.getElementById('code7').innerHTML = '&nbsp;&nbsp;this is balanced';
-        break;
-	}
-  }
 }
