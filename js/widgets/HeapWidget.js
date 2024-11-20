@@ -1,23 +1,8 @@
-// @author Steven Halim, copy paste from Ivan Reinaldo's base file
-// Defines a Heap object; keeps implementation of Heap internally and interact with GraphWidget to display Heap visualizations
 
 var Heap = function() {
   var self = this;
   var graphWidget = new GraphWidget();
 
-  /*
-   * A: Internal representation of Heap in this object
-   * It is a compact 1-based 1-dimensional array (ignoring index 0).
-   * The parent/left child/right child can be computed via index manipulation.
-   *
-   * Elements of A are ObjectPair objects, where first element is the value and the second element is the ID of the vertex SVG corresponding to the value
-   */
-
-  /*
-   * Edge IDs are the index of the child element, so for example edge A[1]-A[2] will have ID "e2" (edge 2)
-   * The edges will be set to not change when vertexes are interchanged
-   * This eliminates the need to maintain an Adjacency Matrix / List
-   */
 
   var coord = new Array();
   var A = new Array();
