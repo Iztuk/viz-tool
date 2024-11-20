@@ -1,118 +1,252 @@
 @charset "utf-8";
 
-html { overflow-y: scroll; }
+/* Base Styling */
+html {
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
 
-body { background: #eeeeee; font-family: "PT Sans"; font-size: 13px; }
+body {
+  background: linear-gradient(145deg, #2e3a42, #53ccc2); /* Subtle gradient */
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
 
+/* Glassmorphism Effect */
+.glass {
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Top Bar */
 #top-bar {
-	height: 40px;
-	padding: 0px 30px;
-	background: black;
-	color: white;
+  height: 70px;
+  padding: 0 50px;
+  background: linear-gradient(90deg, #1565c0, #1976d2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
-	/*left-side*/
-	#home {
-		font-family: 'SilkscreenNormal';
-		font-size: 20px;
-		padding-top: 10px;
-	}
-	#title {
-		padding-left: 20px;
-		text-transform: uppercase;
-		font-size: 16px;
-		color: #aaaaaa;
-	}
-		#title a { cursor: pointer; }
-		#title .selected-viz { font-weight: bold; color: white; }
-		
-	/*right-side*/
-	#fb-login {
-		float: right;
-		background: #516eab;
-		padding: 11px 15px;
-		font-size: 14px;
-	}
-	
-#main { position: relative; padding: 30px 30px 10px 10px; overflow: auto; }
-	
+
+#home {
+  font-family: "SilkscreenNormal", sans-serif;
+  font-size: 26px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+#title {
+  padding-left: 20px;
+  text-transform: uppercase;
+  font-size: 18px;
+  color: #bbdefb;
+}
+
+#title a {
+  cursor: pointer;
+  color: #90caf9;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+#title a:hover {
+  color: white;
+}
+
+#title .selected-viz {
+  font-weight: bold;
+  color: white;
+  border-bottom: 2px solid #90caf9;
+}
+
+/* Login Button */
+#fb-login {
+  float: right;
+  background: linear-gradient(90deg, #546b9b, #4267b2);
+  padding: 14px 20px;
+  font-size: 16px;
+  color: white;
+  border-radius: 24px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+#fb-login:hover {
+  background: #39517e;
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Main Content */
+#main {
+  position: relative;
+  padding: 50px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Bottom Bar */
 #bottom-bar {
-	padding: 12px 30px;
-	background: black;
-	color: white;
-	font-size: 14px;
-	text-align: right;
+  padding: 16px 50px;
+  background: linear-gradient(90deg, #1565c0, #1976d2);
+  color: white;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-	#bottom-bar a { padding-left: 15px; cursor: pointer; }
-		#bottom-bar a:hover { text-decoration: underline; }
-	
+
+#bottom-bar a {
+  cursor: pointer;
+  color: #90caf9;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+#bottom-bar a:hover {
+  text-decoration: underline;
+  color: white;
+}
+
+/* Overlays with Neumorphism */
 #dark-overlay {
-	display: none;
-	background: rgba(0,0,0,0.7);
-	height: 100%;
-	width: 100%;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 1002;
-}
-	.overlays {
-		display: none;
-		background: #eeeeee;
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		z-index: 1003;
-	}
-	#about {
-		height: 470px;
-		width: 600px;
-		margin-left: -300px;
-		margin-top: -235px;
-	}
-	#team {
-		height: 460px;
-		width: 300px;
-		margin-left: -150px;
-		margin-top: -230px;
-	}
-	#termsofuse {
-		height: 180px;
-		width: 400px;
-		margin-left: -200px;
-		margin-top: -90px;
-	}
-		.overlays .close-overlay {
-			position: absolute;
-			top: 20px;
-			right: 20px;
-			cursor: pointer;
-		}
-		.overlays h4 {
-			color: white;
-			font-family: 'SilkscreenNormal';
-			font-size: 20px;
-			padding: 15px 20px;
-		}
-		.overlays .content { padding: 10px 20px 20px; }
-			.overlays p { padding-top: 10px; font-size: 14px; }
-			.overlays a { text-decoration: underline; }
-			
-@media (min-width: 320px) { /* 320-480px */
-
+  display: none;
+  background: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1002;
 }
 
-@media (min-width: 480px) { /* 480-768px */
-#top-bar { padding: 0px 50px; }
-#bottom-bar { padding: 12px 50px; }
-#main { padding: 50px 50px 30px 30px; }
+.overlays {
+  display: none;
+  background: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1003;
+  transform: translate(-50%, -50%);
+  border-radius: 16px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2), -10px -10px 30px rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  animation: fadeIn 0.5s ease-in-out;
 }
 
-@media (min-width: 768px) { /* 768-1024px */
-#top-bar { padding: 0px 60px; }
-#bottom-bar { padding: 12px 60px; }
-#main { padding: 60px 60px 40px 40px; }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -55%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
 }
 
-@media (min-width: 1024px) { /* more than 1024px */
+.overlays .close-overlay {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease-in-out;
+}
 
+.overlays .close-overlay:hover {
+  color: #d32f2f;
+}
+
+.overlays h4 {
+  font-family: "SilkscreenNormal", sans-serif;
+  font-size: 22px;
+  padding: 16px;
+  background: #1976d2;
+  color: white;
+  margin: 0;
+}
+
+.overlays .content {
+  padding: 24px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555;
+}
+
+.overlays p {
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.overlays a {
+  text-decoration: underline;
+  color: #1976d2;
+}
+
+/* Specific Overlays */
+#about {
+  width: 640px;
+  height: 500px;
+}
+
+#team {
+  width: 360px;
+  height: 500px;
+}
+
+#termsofuse {
+  width: 420px;
+  height: 240px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 10px;
+  }
+
+  #bottom-bar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+  }
+
+  #main {
+    padding: 30px;
+  }
+
+  #fb-login {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  #top-bar {
+    padding: 10px;
+  }
+
+  #bottom-bar {
+    padding: 10px;
+  }
+
+  #main {
+    padding: 20px;
+  }
 }
