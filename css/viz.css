@@ -85,9 +85,6 @@ html { overflow-y: auto; } /*override common.css*/
 			width: 10px;
 		}
 
-#media-controls {
-
-}
 	.media-control-button {
 		cursor: pointer;
 		position: fixed;
