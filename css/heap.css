@@ -1,216 +1,306 @@
 @charset "utf-8";
+/* Actions Panel Container */
+#actions-panel {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 200px;
+    background-color: #3a539b;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%); /* Hidden initially */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+}
 
-/*all action pullout (input) stuff here*/
+/* Arrow Button */
+#toggle-arrow {
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    width: 40px;
+    height: 40px;
+    background: #3a539b;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    transform: rotate(0deg);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
 
+#toggle-arrow:hover {
+    background-color: #1e385e;
+}
+
+#toggle-arrow span {
+    font-size: 18px;
+    font-weight: bold;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+/* Actions Content */
+#actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+    gap: 1px;
+}
+
+#actions p {
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #3a539b;
+    transition: background-color 0.3s ease;
+}
+
+#actions p:hover {
+    background-color: #1e385e;
+}
+
+#actions #node-input {
+    padding: 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    width: 100%;
+    outline: none;
+    background-color: #f3f4f6;
+    color: #333;
+}
+
+#actions #node-input:focus {
+    background-color: #fff;
+    border: 1px solid #1e385e;
+}
+
+
+
+/* Action pullout (input) styling */
 #buildv1-input {
 	position: fixed;
 	bottom: 173px;
 	left: 196px;
-	background: #777;
+	background: rgba(119, 119, 119, 0.8); /* Semi-transparent background */
 	width: 0px;
 	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+	transition: all 0.3s ease-in-out; /* Smooth opening/closing animation */
 }
-	#buildv1-input input {
-		width: 200px;
-		background: black;
-		color: white;
-		padding: 8px;
-	}
-	#buildv1-go {
-		position: fixed;
-		bottom: 173px;
-		left: 396px;
-		width: 0px;
-		background: #777;
-		color: white;
-		overflow: hidden;
-	}
-		#buildv1-go p {
-			padding: 8px 8px 7px;
-		}
-	#buildv1-sample {
-		position: fixed;
-		bottom: 173px;
-		left: 433px;
-		width: 0px;
-		background: #777;
-		color: white;
-		overflow: hidden;
-		white-space: nowrap;
-	}
-		#buildv1-sample p {
-			padding: 8px 8px 7px;
-		}
-	
-#buildv2-input {
+#buildv1-input input {
+	width: 200px;
+	background: #1e1e1e; /* Darker background for input */
+	color: #ffffff;
+	padding: 10px;
+	border: 1px solid #444; /* Subtle border */
+	border-radius: 6px;
+	font-family: "Poppins", sans-serif; /* Modern font */
+	font-size: 14px;
+	transition: border-color 0.3s ease;
+}
+#buildv1-input input:focus {
+	border-color: #76c7c0; /* Highlight border on focus */
+	outline: none;
+}
+
+#buildv1-go {
 	position: fixed;
-	bottom: 146px;
-	left: 196px;
-	background: #777;
+	bottom: 173px;
+	left: 396px;
 	width: 0px;
+	background: rgba(119, 119, 119, 0.8); /* Semi-transparent background */
+	color: white;
 	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+	transition: all 0.3s ease-in-out;
 }
-	#buildv2-input input {
-		width: 200px;
-		background: black;
-		color: white;
-		padding: 6px 8px 5px;
-	}
-	#buildv2-go {
-		position: fixed;
-		bottom: 146px;
-		left: 396px;
-		width: 0px;
-		background: #777;
-		color: white;
-		overflow: hidden;
-	}
-		#buildv2-go p {
-			padding: 5px 8px;
-		}
-	#buildv2-sample {
-		position: fixed;
-		bottom: 146px;
-		left: 433px;
-		width: 0px;
-		background: #777;
-		color: white;
-		overflow: hidden;
-		white-space: nowrap;
-	}
-		#buildv2-sample p {
-			padding: 5px 8px;
-		}
-	
+#buildv1-go p {
+	padding: 8px 12px;
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+	cursor: pointer;
+	background: #444; /* Dark button */
+	border-radius: 6px;
+	transition: background-color 0.3s ease, transform 0.2s ease;
+}
+#buildv1-go p:hover {
+	background: #76c7c0; /* Highlight color */
+	transform: scale(1.05); /* Slight zoom on hover */
+}
+
+#buildv1-sample {
+	position: fixed;
+	bottom: 173px;
+	left: 433px;
+	width: 0px;
+	background: rgba(119, 119, 119, 0.8);
+	color: white;
+	overflow: hidden;
+	white-space: nowrap;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease-in-out;
+}
+#buildv1-sample p {
+	padding: 8px 12px;
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+}
+
+/* Buildv2 Styling */
+#buildv2-input,
+#buildv2-go,
+#buildv2-sample {
+	/* Inherit similar styling from Buildv1 for consistency */
+	background: rgba(119, 119, 119, 0.8);
+	color: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease-in-out;
+}
+#buildv2-input input {
+	width: 200px;
+	background: #1e1e1e;
+	color: #ffffff;
+	padding: 8px;
+	border: 1px solid #444;
+	border-radius: 6px;
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+}
+#buildv2-go p,
+#buildv2-sample p {
+	padding: 6px 10px;
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+}
+
+/* Insert Styling */
 #insert-input {
 	position: fixed;
 	bottom: 119px;
 	left: 196px;
-	background: #777;
+	background: rgba(119, 119, 119, 0.8);
 	width: 0px;
 	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease-in-out;
 }
-	#insert-input input {
-		width: 40px;
-		background: black;
-		color: white;
-		padding: 6px 8px 5px;
-	}
-	#insert-go {
-		position: fixed;
-		bottom: 119px;
-		left: 228px;
-		width: 0px;
-		background: #777;
-		color: white;
-		overflow: hidden;
-	}
-		#insert-go p {
-			padding: 5px 8px;
-		}
-		
-/*all action pullout (error) stuff here*/
-.err {
+#insert-input input {
+	width: 40px;
+	background: #1e1e1e;
+	color: white;
+	padding: 8px;
+	border: 1px solid #444;
+	border-radius: 6px;
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+}
+#insert-go {
 	position: fixed;
-	color: red;
-}
-#buildv1-err {
-	bottom: 173px;
-	left: 538px;
-	padding: 8px 0px 7px;
-}
-#buildv2-err {
-	bottom: 146px;
-	left: 538px;
-	padding: 5px 0px;
-}
-#insert-err {
 	bottom: 119px;
-	left: 272px;
-	padding: 5px 0px;
+	left: 228px;
+	width: 0px;
+	background: rgba(119, 119, 119, 0.8);
+	color: white;
+	overflow: hidden;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease-in-out;
 }
-#extractmax-err {
-	bottom: 92px;
-	left: 201px;
-	padding: 5px 0px;
+#insert-go p {
+	padding: 6px 10px;
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+	background: #444;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: background-color 0.3s ease, transform 0.2s ease;
 }
-#heapsort-err {
-	bottom: 60px;
-	left: 201px;
-	padding: 8px 0px 7px;
+#insert-go p:hover {
+	background: #76c7c0;
+	transform: scale(1.05);
 }
 
-/*all tutorial stuff here*/
-#heap-tutorial-1 {
-	top: 60px;
-	left: 60px;
-	width: 250px;
+/* Error Messages */
+.err {
+	position: fixed;
+	color: #ff4d4d; /* Modern error color */
+	font-family: "Poppins", sans-serif;
+	font-size: 12px;
+	background: rgba(30, 30, 30, 0.9);
+	padding: 5px;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-#heap-tutorial-2 {
-	bottom: 230px;
-	left: 60px;
-	width: 220px;
-}
-	#heap-tutorial-2:before {
-		top: 100%;
-		left: 20%;
-		border-top-color: black;
-		margin-left: -10px;
-	}
-#heap-tutorial-3 {
-	top: 300px;
-	left: 50%;
-	width: 200px;
-	margin-left: -110px;
-}
-	#heap-tutorial-3:before {
-		bottom: 100%;
-		left: 50%;
-		border-bottom-color: black;
-		margin-left: -10px;
-	}
-#heap-tutorial-4 {
-	bottom: 335px;
-	right: 150px;
-	width: 200px;
-}
-	#heap-tutorial-4:before {
-		top: 100%;
-		left: 20%;
-		border-top-color: black;
-		margin-left: -10px;
-	}
-#heap-tutorial-5 {
-	bottom: 275px;
-	right: 170px;
-	width: 180px;
-}
-	#heap-tutorial-5:before {
-		top: 100%;
-		left: 20%;
-		border-top-color: black;
-		margin-left: -10px;
-	}
-#heap-tutorial-6 {
-	bottom: 70px;
-	left: 50%;
-	width: 220px;
-	margin-left: -120px;
-}
-	#heap-tutorial-6:before {
-		top: 100%;
-		left: 50%;
-		border-top-color: black;
-		margin-left: -10px;
-	}
+
+/* Tutorial Styles */
+#heap-tutorial-1,
+#heap-tutorial-2,
+#heap-tutorial-3,
+#heap-tutorial-4,
+#heap-tutorial-5,
+#heap-tutorial-6,
 #heap-tutorial-7 {
-	top: 70px;
-	right: 60px;
-	width: 150px;
+	background: rgba(70, 70, 70, 0.9); /* Transparent background */
+	color: white;
+	padding: 10px;
+	border-radius: 6px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	font-family: "Poppins", sans-serif;
+	font-size: 14px;
+	transition: all 0.3s ease-in-out;
 }
-	#heap-tutorial-7:before {
-		bottom: 100%;
-		left: 50%;
-		border-bottom-color: black;
-		margin-left: -10px;
-	}
+
+#heap-tutorial-1:before,
+#heap-tutorial-2:before,
+#heap-tutorial-3:before,
+#heap-tutorial-4:before,
+#heap-tutorial-5:before,
+#heap-tutorial-6:before,
+#heap-tutorial-7:before {
+	content: "";
+	position: absolute;
+	height: 0;
+	width: 0;
+	border-style: solid;
+	border-width: 10px;
+	border-color: transparent;
+}
+
+#heap-tutorial-1:before {
+	top: 100%;
+	left: 20%;
+	border-top-color: #444;
+}
+#heap-tutorial-3:before {
+	bottom: 100%;
+	left: 50%;
+	border-bottom-color: #444;
+}
+
+/* Consistent Animations */
+.hidden {
+	opacity: 0;
+	visibility: hidden;
+}
+.visible {
+	opacity: 1;
+	visibility: visible;
+	transition: all 0.3s ease-in-out;
+}
